@@ -97,132 +97,156 @@
         }
     </style>
     <script>
-        // Função para validar e enviar os dados do formulário
-        function validarFormulario(event) {
-            event.preventDefault();
+       
+    // Função para validar e enviar os dados do formulário
+    function validarFormulario(event) {
+        event.preventDefault();
 
-            let form = document.getElementById("patientForm");
-            let formData = new FormData(form);
+        let form = document.getElementById("patientForm");
+        let formData = new FormData(form);
 
-            let dados = [];
-            formData.forEach((value, key) => {
-                if (value && !dados.some(d => d.includes(key))) { // Verifica se o dado já não foi incluído
-                    dados.push(`*${key.replace(/([A-Z])/g, ' $1').trim()}:* ${value}`);
-                    localStorage.setItem(key, value); // Salva os dados no localStorage
-                }
-            });
+        let dados = [];
+        let historicoMedico = []; // Lista para armazenar histórico médico
+        let procedimentos = []; // Lista para armazenar procedimentos
 
-            // Incluir número do SUS caso fornecido
-            let numeroSUS = formData.get("SUSNumero");
-            if (numeroSUS) {
-                dados.push(`*Número do SUS:* ${numeroSUS}`);
+        // Processar os dados do formulário
+        formData.forEach((value, key) => {
+            if (value && key !== "HistoricoMedico" && key !== "Procedimentos") {
+                dados.push(`*${key.replace(/([A-Z])/g, ' $1').trim()}:* ${value}`);
+                localStorage.setItem(key, value); // Salva os dados no localStorage
             }
+        });
 
-            // Obter estado e cidade selecionados
-            let estado = formData.get("Estado");
-            let cidade = formData.get("Cidade");
-            if (estado && cidade) {
-                dados.push(`*Estado:* ${estado}`);
-                dados.push(`*Cidade:* ${cidade}`);
-            }
+        // Processar histórico médico (para evitar duplicação)
+        let historicoMedicoInputs = form.querySelectorAll('input[name="HistoricoMedico"]:checked');
+        historicoMedicoInputs.forEach(input => {
+            historicoMedico.push(input.value);
+        });
 
-            // Obter o plano selecionado e gerar o link de pagamento
-            let planoSelecionado = formData.get("Plano");
-            let linkPagamento = "";
-
-            switch (planoSelecionado) {
-                case "Plano Básico":
-                    linkPagamento = "https://pagamento.com/plano-basico"; // Substitua com o link real
-                    break;
-                case "Plano Intermediário":
-                    linkPagamento = "https://pagamento.com/plano-intermediario"; // Substitua com o link real
-                    break;
-                case "Plano Avançado":
-                    linkPagamento = "https://pagamento.com/plano-avancado"; // Substitua com o link real
-                    break;
-                default:
-                    linkPagamento = "";
-            }
-
-            if (linkPagamento) {
-                dados.push(`*Link para pagamento do plano:* ${linkPagamento}`);
-            }
-
-            let mensagem = `Olá, estou entrando em contato pelo site e preciso de ajuda com os procedimentos.%0A%0A${dados.join('%0A')}`;
-
-            let telefone = formData.get("Telefone").replace(/\D/g, '');
-            if (telefone.length === 11) {
-                let linkWhatsApp = `https://api.whatsapp.com/send?phone=55${telefone}&text=${mensagem}`;
-                window.open(linkWhatsApp, "_blank"); // Para abrir o WhatsApp tanto em web quanto mobile
-            } else {
-                alert("Número de telefone inválido. Por favor, insira um número válido.");
-                return;
-            }
-
-            form.submit();
+        if (historicoMedico.length > 0) {
+            dados.push(`*Histórico Médico:* ${historicoMedico.join(", ")}`);
         }
 
-        // Função para preencher os campos do formulário com dados salvos
-        function preencherFormulario() {
-            let form = document.getElementById("patientForm");
-            let formData = new FormData(form);
+        // Processar procedimentos (para evitar duplicação)
+        let procedimentosInputs = form.querySelectorAll('input[name="Procedimentos"]:checked');
+        procedimentosInputs.forEach(input => {
+            procedimentos.push(input.value);
+        });
 
-            formData.forEach((value, key) => {
-                if (localStorage.getItem(key)) {
-                    form.querySelector(`[name="${key}"]`).value = localStorage.getItem(key);
-                }
-            });
-
-            let planoSelecionado = formData.get("Plano");
-            localStorage.setItem("Plano", planoSelecionado); // Salva o plano selecionado
+        if (procedimentos.length > 0) {
+            dados.push(`*Procedimentos Desejados:* ${procedimentos.join(", ")}`);
         }
 
-        window.onload = preencherFormulario;
+        // Obter número do SUS, se fornecido, e adicionar apenas uma vez
+        let numeroSUS = formData.get("SUSNumero");
+        if (numeroSUS) {
+            dados.push(`*Número do SUS:* ${numeroSUS}`);
+        }
 
-        // Função para preencher estado e cidade automaticamente com API
-        function preencherEstadosECidades() {
-            // Carregar estados e cidades dinamicamente
-            fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
-                .then(response => response.json())
-                .then(data => {
-                    let estadoSelect = document.getElementById("Estado");
+        // Obter estado e cidade selecionados
+        let estado = formData.get("Estado");
+        let cidade = formData.get("Cidade");
+        if (estado && cidade) {
+            dados.push(`*Estado:* ${estado}`);
+            dados.push(`*Cidade:* ${cidade}`);
+        }
 
-                    data.forEach(estado => {
-                        let option = document.createElement("option");
-                        option.value = estado.sigla;
-                        option.textContent = estado.nome;
-                        estadoSelect.appendChild(option);
-                    });
-                })
-                .catch(error => {
-                    console.error("Erro ao carregar os estados:", error);
+        // Obter plano selecionado e gerar o link de pagamento
+        let planoSelecionado = formData.get("Plano");
+        let linkPagamento = "";
+
+        switch (planoSelecionado) {
+            case "Plano Básico":
+                linkPagamento = "https://pagamento.com/plano-basico"; // Substitua com o link real
+                break;
+            case "Plano Intermediário":
+                linkPagamento = "https://pagamento.com/plano-intermediario"; // Substitua com o link real
+                break;
+            case "Plano Avançado":
+                linkPagamento = "https://pagamento.com/plano-avancado"; // Substitua com o link real
+                break;
+            default:
+                linkPagamento = "";
+        }
+
+        if (linkPagamento) {
+            dados.push(`*Link para pagamento do plano:* ${linkPagamento}`);
+        }
+
+        let mensagem = `Olá, estou entrando em contato pelo site e preciso de ajuda com os procedimentos.%0A%0A${dados.join('%0A')}`;
+
+        let telefone = formData.get("Telefone").replace(/\D/g, '');
+        if (telefone.length === 11) {
+            let linkWhatsApp = `https://api.whatsapp.com/send?phone=55${telefone}&text=${mensagem}`;
+            window.open(linkWhatsApp, "_blank"); // Para abrir o WhatsApp tanto em web quanto mobile
+        } else {
+            alert("Número de telefone inválido. Por favor, insira um número válido.");
+            return;
+        }
+
+        form.submit();
+    }
+
+    // Função para preencher os campos do formulário com dados salvos
+    function preencherFormulario() {
+        let form = document.getElementById("patientForm");
+        let formData = new FormData(form);
+
+        formData.forEach((value, key) => {
+            if (localStorage.getItem(key)) {
+                form.querySelector(`[name="${key}"]`).value = localStorage.getItem(key);
+            }
+        });
+        
+        let planoSelecionado = formData.get("Plano");
+        localStorage.setItem("Plano", planoSelecionado); // Salva o plano selecionado
+    }
+
+    window.onload = preencherFormulario;
+
+    // Função para preencher estado e cidade automaticamente com API
+    function preencherEstadosECidades() {
+        // Carregar estados e cidades dinamicamente
+        fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+            .then(response => response.json())
+            .then(data => {
+                let estadoSelect = document.getElementById("Estado");
+
+                data.forEach(estado => {
+                    let option = document.createElement("option");
+                    option.value = estado.sigla;
+                    option.textContent = estado.nome;
+                    estadoSelect.appendChild(option);
                 });
-
-            // Atualizar as cidades conforme o estado selecionado
-            document.getElementById("Estado").addEventListener("change", function() {
-                let estadoSelecionado = this.value;
-                let cidadeSelect = document.getElementById("Cidade");
-                cidadeSelect.innerHTML = '<option value="">Selecione a Cidade</option>'; // Limpar as cidades
-
-                if (estadoSelecionado) {
-                    fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estadoSelecionado}/municipios`)
-                        .then(response => response.json())
-                        .then(data => {
-                            data.forEach(cidade => {
-                                let option = document.createElement("option");
-                                option.value = cidade.nome;
-                                option.textContent = cidade.nome;
-                                cidadeSelect.appendChild(option);
-                            });
-                        })
-                        .catch(error => {
-                            console.error("Erro ao carregar as cidades:", error);
-                        });
-                }
+            })
+            .catch(error => {
+                console.error("Erro ao carregar os estados:", error);
             });
-        }
-    </script>
 
+        // Atualizar as cidades conforme o estado selecionado
+        document.getElementById("Estado").addEventListener("change", function() {
+            let estadoSelecionado = this.value;
+            let cidadeSelect = document.getElementById("Cidade");
+            cidadeSelect.innerHTML = '<option value="">Selecione a Cidade</option>'; // Limpar as cidades
+
+            if (estadoSelecionado) {
+                fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estadoSelecionado}/municipios`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(cidade => {
+                            let option = document.createElement("option");
+                            option.value = cidade.nome;
+                            option.textContent = cidade.nome;
+                            cidadeSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => {
+                        console.error("Erro ao carregar as cidades:", error);
+                    });
+       
+</script>
+
+     
 </body>
 </html>
 
