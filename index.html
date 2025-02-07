@@ -106,7 +106,7 @@
 
             let dados = [];
             formData.forEach((value, key) => {
-                if (value) {
+                if (value && !dados.some(d => d.includes(key))) { // Verifica se o dado já não foi incluído
                     dados.push(`*${key.replace(/([A-Z])/g, ' $1').trim()}:* ${value}`);
                     localStorage.setItem(key, value); // Salva os dados no localStorage
                 }
@@ -126,12 +126,34 @@
                 dados.push(`*Cidade:* ${cidade}`);
             }
 
+            // Obter o plano selecionado e gerar o link de pagamento
+            let planoSelecionado = formData.get("Plano");
+            let linkPagamento = "";
+
+            switch (planoSelecionado) {
+                case "Plano Básico":
+                    linkPagamento = "https://pagamento.com/plano-basico"; // Substitua com o link real
+                    break;
+                case "Plano Intermediário":
+                    linkPagamento = "https://pagamento.com/plano-intermediario"; // Substitua com o link real
+                    break;
+                case "Plano Avançado":
+                    linkPagamento = "https://pagamento.com/plano-avancado"; // Substitua com o link real
+                    break;
+                default:
+                    linkPagamento = "";
+            }
+
+            if (linkPagamento) {
+                dados.push(`*Link para pagamento do plano:* ${linkPagamento}`);
+            }
+
             let mensagem = `Olá, estou entrando em contato pelo site e preciso de ajuda com os procedimentos.%0A%0A${dados.join('%0A')}`;
 
             let telefone = formData.get("Telefone").replace(/\D/g, '');
             if (telefone.length === 11) {
                 let linkWhatsApp = `https://api.whatsapp.com/send?phone=55${telefone}&text=${mensagem}`;
-                window.open(linkWhatsApp, "_blank");  // Para abrir o WhatsApp tanto em web quanto mobile
+                window.open(linkWhatsApp, "_blank"); // Para abrir o WhatsApp tanto em web quanto mobile
             } else {
                 alert("Número de telefone inválido. Por favor, insira um número válido.");
                 return;
@@ -144,17 +166,17 @@
         function preencherFormulario() {
             let form = document.getElementById("patientForm");
             let formData = new FormData(form);
-           
+
             formData.forEach((value, key) => {
                 if (localStorage.getItem(key)) {
                     form.querySelector(`[name="${key}"]`).value = localStorage.getItem(key);
                 }
             });
-            
+
             let planoSelecionado = formData.get("Plano");
-            localStorage.setItem("Plano", planoSelecionado);  // Salva o plano selecionado
+            localStorage.setItem("Plano", planoSelecionado); // Salva o plano selecionado
         }
-        
+
         window.onload = preencherFormulario;
 
         // Função para preencher estado e cidade automaticamente com API
@@ -200,6 +222,10 @@
             });
         }
     </script>
+
+</body>
+</html>
+
 </head>
 <body onload="preencherEstadosECidades()">
   <div class="container">
@@ -318,7 +344,7 @@
                 <option value="Plano Intermediário">Plano Intermediário - R$ 199,90/mês</option>
                 <option value="Plano Avançado">Plano Avançado - R$ 299,90/mês</option>
             </select>
-            
+           
             <div class="consentimento">
                 <label>
                     <input type="checkbox" name="Consentimento" value="Aceito" required>
