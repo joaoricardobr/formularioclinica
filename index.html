@@ -118,6 +118,14 @@
                 dados.push(`*Número do SUS:* ${numeroSUS}`);
             }
 
+            // Obter estado e cidade selecionados
+            let estado = formData.get("Estado");
+            let cidade = formData.get("Cidade");
+            if (estado && cidade) {
+                dados.push(`*Estado:* ${estado}`);
+                dados.push(`*Cidade:* ${cidade}`);
+            }
+
             let mensagem = `Olá, estou entrando em contato pelo site e preciso de ajuda com os procedimentos.%0A%0A${dados.join('%0A')}`;
 
             let telefone = formData.get("Telefone").replace(/\D/g, '');
@@ -148,10 +156,53 @@
         }
         
         window.onload = preencherFormulario;
+
+        // Função para preencher estado e cidade automaticamente com API
+        function preencherEstadosECidades() {
+            // Carregar estados e cidades dinamicamente
+            fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+                .then(response => response.json())
+                .then(data => {
+                    let estadoSelect = document.getElementById("Estado");
+
+                    data.forEach(estado => {
+                        let option = document.createElement("option");
+                        option.value = estado.sigla;
+                        option.textContent = estado.nome;
+                        estadoSelect.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error("Erro ao carregar os estados:", error);
+                });
+
+            // Atualizar as cidades conforme o estado selecionado
+            document.getElementById("Estado").addEventListener("change", function() {
+                let estadoSelecionado = this.value;
+                let cidadeSelect = document.getElementById("Cidade");
+                cidadeSelect.innerHTML = '<option value="">Selecione a Cidade</option>'; // Limpar as cidades
+
+                if (estadoSelecionado) {
+                    fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estadoSelecionado}/municipios`)
+                        .then(response => response.json())
+                        .then(data => {
+                            data.forEach(cidade => {
+                                let option = document.createElement("option");
+                                option.value = cidade.nome;
+                                option.textContent = cidade.nome;
+                                cidadeSelect.appendChild(option);
+                            });
+                        })
+                        .catch(error => {
+                            console.error("Erro ao carregar as cidades:", error);
+                        });
+                }
+            });
+        }
     </script>
 </head>
-<body>
-    <div class="container">
+<body onload="preencherEstadosECidades()">
+  <div class="container">
         <h2>Formulário de Atendimento ao Paciente</h2>
         <form id="patientForm" action="https://formspree.io/f/mwpvqoq" method="POST" onsubmit="validarFormulario(event)">
            
@@ -184,6 +235,23 @@
                 <option value="">Selecione</option>
                 <option value="São Paulo">São Paulo</option>
                 <option value="Rio de Janeiro">Rio de Janeiro</option>
+            </select>
+
+            <label>Plano de Saúde:</label>
+            <select name="PlanoDeSaude" required>
+                <option value="">Selecione</option>
+                <option value="Sim">Sim</option>
+                <option value="Não">Não</option>
+            </select>
+
+            <label>Estado:</label>
+            <select name="Estado" id="Estado" required>
+                <option value="">Selecione o Estado</option>
+            </select>
+
+            <label>Cidade:</label>
+            <select name="Cidade" id="Cidade" required>
+                <option value="">Selecione a Cidade</option>
             </select>
 
             <h3>📅 Agendamento</h3>
