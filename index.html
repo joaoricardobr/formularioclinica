@@ -136,7 +136,22 @@
                     form.querySelector(`[name="${key}"]`).value = localStorage.getItem(key);
                 }
             });
-        }
+            
+        // Captura a opção do plano escolhido
+            let planoSelecionado = formData.get("Plano");
+            localStorage.setItem("Plano", planoSelecionado);  // Salva o plano selecionado
+
+            // Gera o link de pagamento
+            let linkPagamento;
+            if (planoSelecionado === "Nenhum plano por enquanto") {
+                linkPagamento = "https://linkdopagamento.com/sem-plano";
+            } else if (planoSelecionado === "Plano Básico") {
+                linkPagamento = "https://linkdopagamento.com/plano-basico";
+            } else if (planoSelecionado === "Plano Intermediário") {
+                linkPagamento = "https://linkdopagamento.com/plano-intermediario";
+            } else if (planoSelecionado === "Plano Avançado") {
+                linkPagamento = "https://linkdopagamento.com/plano-avancado";
+            }
 
         // Chama a função ao carregar a página para preencher os dados salvos
         window.onload = preencherFormulario;
@@ -225,7 +240,16 @@
                 <option value="Não">Não</option>
             </select>
             <textarea name="Cirurgias" placeholder="Digite aqui alguma cirurgia caso tenha feito alguma"></textarea>
-
+             
+             <h3>Escolha seu Plano</h3>
+            <label>Selecione um plano:</label>
+            <select name="Plano" required>
+                <option value="Nenhum plano por enquanto">Nenhum plano por enquanto</option>
+                <option value="Plano Básico">Plano Básico - R$ 99,90/mês</option>
+                <option value="Plano Intermediário">Plano Intermediário - R$ 199,90/mês</option>
+                <option value="Plano Avançado">Plano Avançado - R$ 299,90/mês</option>
+            </select>
+            
             <div class="consentimento">
                 <label>
                     <input type="checkbox" name="Consentimento" value="Aceito" required>
