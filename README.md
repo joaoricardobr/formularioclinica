@@ -11,6 +11,10 @@ Este repositório contém o código-fonte do site da Clínica de Estética, incl
 - **Integração com Formspree**: Envia os dados para um endpoint configurado.
 - **Encaminhamento para WhatsApp**: Após o envio, uma mensagem formatada é gerada para contato via WhatsApp.
 - **Design Responsivo**: Estilizado em azul escuro e dourado, adequado para dispositivos móveis e desktops.
+-  **Campos Personalizados**: Dados pessoais, histórico médico, procedimentos desejados, etc.
+- **Seleção Dinâmica de Estados e Cidades**: Usa API para preencher as opções de estado e cidade automaticamente.
+- **Plano de Saúde**: Opções para plano de saúde e informações de pagamento.
+- **Consentimento**: Checkbox para aceitação dos termos e condições.
 
 ## 🚀 Tecnologias Utilizadas
 - **HTML5**
