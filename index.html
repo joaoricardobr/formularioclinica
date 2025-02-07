@@ -112,6 +112,12 @@
                 }
             });
 
+            // Incluir número do SUS caso fornecido
+            let numeroSUS = formData.get("SUS");
+            if (numeroSUS) {
+                dados.push(`*Número do SUS:* ${numeroSUS}`);
+            }
+
             let mensagem = `Olá, estou entrando em contato pelo site e preciso de ajuda com os procedimentos.%0A%0A${dados.join('%0A')}`;
 
             let telefone = formData.get("Telefone").replace(/\D/g, '');
@@ -137,23 +143,10 @@
                 }
             });
             
-        // Captura a opção do plano escolhido
             let planoSelecionado = formData.get("Plano");
             localStorage.setItem("Plano", planoSelecionado);  // Salva o plano selecionado
+        }
 
-            // Gera o link de pagamento
-            let linkPagamento;
-            if (planoSelecionado === "Nenhum plano por enquanto") {
-                linkPagamento = "https://linkdopagamento.com/sem-plano";
-            } else if (planoSelecionado === "Plano Básico") {
-                linkPagamento = "https://linkdopagamento.com/plano-basico";
-            } else if (planoSelecionado === "Plano Intermediário") {
-                linkPagamento = "https://linkdopagamento.com/plano-intermediario";
-            } else if (planoSelecionado === "Plano Avançado") {
-                linkPagamento = "https://linkdopagamento.com/plano-avancado";
-            }
-
-        // Chama a função ao carregar a página para preencher os dados salvos
         window.onload = preencherFormulario;
     </script>
 </head>
@@ -201,7 +194,6 @@
             <input type="time" name="HorarioAgendamento" required>
 
             <h3>⚕️ Histórico Médico</h3>
-           
             <div class="toggle-group">
                 <input type="checkbox" name="HistoricoMedico" value="Diabetes" id="diabetes"><label for="diabetes">Diabetes</label>
                 <input type="checkbox" name="HistoricoMedico" value="Hipertensão" id="hipertensao"><label for="hipertensao">Hipertensão</label>
@@ -240,8 +232,17 @@
                 <option value="Não">Não</option>
             </select>
             <textarea name="Cirurgias" placeholder="Digite aqui alguma cirurgia caso tenha feito alguma"></textarea>
-             
-             <h3>Escolha seu Plano</h3>
+
+            <h3>📞 Número do SUS (Opcional)</h3>
+            <label>Selecione se deseja adicionar o número do SUS:</label>
+            <select name="SUS" id="sus" required>
+                <option value="">Não adicionar número</option>
+                <option value="Adicionar">Adicionar número do SUS</option>
+            </select>
+            <input type="text" name="SUSNumero" id="SUSNumero" placeholder="Digite o número do SUS" style="display:none;">
+            <small>Este campo não é obrigatório.</small>
+
+            <h3>Escolha seu Plano</h3>
             <label>Selecione um plano:</label>
             <select name="Plano" required>
                 <option value="Nenhum plano por enquanto">Nenhum plano por enquanto</option>
@@ -263,5 +264,17 @@
             <p>Este site foi desenvolvido por João Ricardo, engenheiro de computação, <a href="https://www.instagram.com/joaoricardo.pe" target="_blank">Instagram</a> | <a href="https://wa.me/55<seu número>" target="_blank">WhatsApp</a></p>
         </footer>
     </div>
+
+    <script>
+        // Mostrar o campo de número do SUS quando a opção for selecionada
+        document.getElementById("sus").addEventListener("change", function() {
+            let susField = document.getElementById("SUSNumero");
+            if (this.value === "Adicionar") {
+                susField.style.display = "block";
+            } else {
+                susField.style.display = "none";
+            }
+        });
+    </script>
 </body>
 </html>
