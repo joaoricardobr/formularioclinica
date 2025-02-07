@@ -186,6 +186,7 @@
             <input type="time" name="HorarioAgendamento" required>
 
             <h3>⚕️ Histórico Médico</h3>
+           
             <div class="toggle-group">
                 <input type="checkbox" name="HistoricoMedico" value="Diabetes" id="diabetes"><label for="diabetes">Diabetes</label>
                 <input type="checkbox" name="HistoricoMedico" value="Hipertensão" id="hipertensao"><label for="hipertensao">Hipertensão</label>
@@ -193,6 +194,7 @@
                 <input type="checkbox" name="HistoricoMedico" value="Asma" id="asma"><label for="asma">Asma</label>
                 <input type="checkbox" name="HistoricoMedico" value="Doenças Cardíacas" id="cardiacas"><label for="cardiacas">Doenças Cardíacas</label>
                 <input type="checkbox" name="HistoricoMedico" value="Epilepsia" id="epilepsia"><label for="epilepsia">Epilepsia</label>
+                <input type="checkbox" name="HistoricoMedico" value="Nenhuma" id="nenhuma"><label for="nenhuma">Nenhuma Doença</label>
             </div>
 
             <h3>💆‍♂️ Procedimentos Desejados</h3>
@@ -205,6 +207,7 @@
                 <input type="checkbox" name="Procedimentos" value="Microagulhamento" id="microagulhamento"><label for="microagulhamento">Microagulhamento</label>
                 <input type="checkbox" name="Procedimentos" value="Lipo enzimática" id="lipo"><label for="lipo">Lipo Enzimática</label>
                 <input type="checkbox" name="Procedimentos" value="Fios de Sustentação" id="fios"><label for="fios">Fios de Sustentação</label>
+                <input type="checkbox" name="Procedimentos" value="Nenhuma" id="nenhuma2"><label for="nenhuma2">Nenhum Procedimento</label>
             </div>
 
             <h3>💊 Medicações em Uso</h3>
@@ -213,7 +216,7 @@
                 <option value="Sim">Sim</option>
                 <option value="Não">Não</option>
             </select>
-            <textarea name="Medicacoes" placeholder="Se aplicável"></textarea>
+            <textarea name="Medicacoes" placeholder="Digite aqui alguma medicação caso tome"></textarea>
 
             <h3>🧑🏼‍⚕️Histórico de Cirurgias</h3>
             <select name="CirurgiasUso">
@@ -221,7 +224,7 @@
                 <option value="Sim">Sim</option>
                 <option value="Não">Não</option>
             </select>
-            <textarea name="Cirurgias" placeholder="Se aplicável"></textarea>
+            <textarea name="Cirurgias" placeholder="Digite aqui alguma cirurgia caso tenha feito alguma"></textarea>
 
             <div class="consentimento">
                 <label>
