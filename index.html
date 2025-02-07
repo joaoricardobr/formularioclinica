@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: white;
+            background-color: #f0f2f5;
             margin: 0;
             padding: 20px;
             color: #16213e;
@@ -18,8 +18,8 @@
             background: white;
             padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            border: 2px solid #003366; /* Azul escuro */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: 3px solid #003366;
         }
         h2, h3 {
             color: #003366;
@@ -32,15 +32,18 @@
         }
         input, select, textarea {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #003366; /* Azul escuro */
+            padding: 12px;
+            border: 2px solid #003366;
             border-radius: 5px;
             margin-bottom: 10px;
             box-sizing: border-box;
-            background: #f9f9f9;
+            background: #ffffff;
+            transition: 0.3s;
         }
-        select {
-            background: #ffffff; /* Fundo branco para seleção */
+        input:focus, select:focus, textarea:focus {
+            border-color: #f4c10f;
+            outline: none;
+            box-shadow: 0 0 8px rgba(244, 193, 15, 0.5);
         }
         .toggle-group {
             display: flex;
@@ -52,17 +55,19 @@
             align-items: center;
             gap: 8px;
             background: #f4c10f;
-            padding: 10px 15px;
+            padding: 12px 18px;
             border-radius: 20px;
             cursor: pointer;
             transition: 0.3s;
+            font-weight: bold;
         }
         .toggle-group input {
             display: none;
         }
         .toggle-group input:checked + label {
-            background: #e3f2fd;
-            color: #16213e;
+            background: #003366;
+            color: white;
+            transform: scale(1.05);
         }
         button {
             background: #f4c10f;
@@ -72,29 +77,27 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            margin: 20px 0;
             width: 100%;
-            transition: background 0.3s;
+            transition: background 0.3s, transform 0.2s;
+            font-weight: bold;
         }
         button:hover {
             background: #ffcc00;
+            transform: scale(1.05);
         }
-        .consentimento {
-            background: #fff3cd;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 20px 0;
+        .info-text {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 10px;
         }
         footer {
             text-align: center;
             margin-top: 40px;
         }
-        footer a {
-            color: #003366;
-            text-decoration: none;
-            font-weight: bold;
-            margin: 0 10px;
-        }
+    </style>
+</head>
+<body>
+  
     </style>
   <script>
     // Função para validar e enviar os dados do formulário
