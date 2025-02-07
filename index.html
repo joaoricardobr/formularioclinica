@@ -96,8 +96,7 @@
             margin: 0 10px;
         }
     </style>
-    <script>
-       
+  <script>
     // Função para validar e enviar os dados do formulário
     function validarFormulario(event) {
         event.preventDefault();
@@ -111,7 +110,7 @@
 
         // Processar os dados do formulário
         formData.forEach((value, key) => {
-            if (value && key !== "HistoricoMedico" && key !== "Procedimentos") {
+            if (value && key !== "HistoricoMedico" && key !== "Procedimentos" && key !== "Estado" && key !== "Cidade" && key !== "SUSNumero") {
                 dados.push(`*${key.replace(/([A-Z])/g, ' $1').trim()}:* ${value}`);
                 localStorage.setItem(key, value); // Salva os dados no localStorage
             }
@@ -143,7 +142,7 @@
             dados.push(`*Número do SUS:* ${numeroSUS}`);
         }
 
-        // Obter estado e cidade selecionados
+        // Obter estado e cidade selecionados e adicioná-los uma única vez
         let estado = formData.get("Estado");
         let cidade = formData.get("Cidade");
         if (estado && cidade) {
@@ -243,7 +242,9 @@
                     .catch(error => {
                         console.error("Erro ao carregar as cidades:", error);
                     });
-       
+            }
+        });
+    }
 </script>
 
      
