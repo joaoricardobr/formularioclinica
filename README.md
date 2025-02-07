@@ -30,7 +30,7 @@ Este repositório contém o código-fonte do site da Clínica de Estética, incl
 ## 📌 Como Usar
 1. Clone este repositório:
    ```sh
-   git clone https://github.com/seu-usuario/clinica-estetica-form.git
+   git clone https://joaoricardobr.github.io/formularioclinica
    ```
 2. Abra o arquivo `index.html` no navegador.
 
