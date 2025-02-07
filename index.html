@@ -113,7 +113,7 @@
             });
 
             // Incluir número do SUS caso fornecido
-            let numeroSUS = formData.get("SUS");
+            let numeroSUS = formData.get("SUSNumero");
             if (numeroSUS) {
                 dados.push(`*Número do SUS:* ${numeroSUS}`);
             }
@@ -147,22 +147,6 @@
             localStorage.setItem("Plano", planoSelecionado);  // Salva o plano selecionado
         }
         
-        // Captura a opção do plano escolhido
-            let planoSelecionado = formData.get("Plano");
-            localStorage.setItem("Plano", planoSelecionado);  // Salva o plano selecionado
-
-            // Gera o link de pagamento
-            let linkPagamento;
-            if (planoSelecionado === "Nenhum plano por enquanto") {
-                linkPagamento = "https://linkdopagamento.com/sem-plano";
-            } else if (planoSelecionado === "Plano Básico") {
-                linkPagamento = "https://linkdopagamento.com/plano-basico";
-            } else if (planoSelecionado === "Plano Intermediário") {
-                linkPagamento = "https://linkdopagamento.com/plano-intermediario";
-            } else if (planoSelecionado === "Plano Avançado") {
-                linkPagamento = "https://linkdopagamento.com/plano-avancado";
-            }
-
         window.onload = preencherFormulario;
     </script>
 </head>
