@@ -257,133 +257,160 @@
 </head>
 <body onload="preencherEstadosECidades()">
   <div class="container">
-        <h2>Formulário de Atendimento ao Paciente</h2>
+        <div class="container">
+        <h2>📋 Formulário de Atendimento ao Paciente</h2>
         <form id="patientForm" action="https://formspree.io/f/mwpvqoq" method="POST" onsubmit="validarFormulario(event)">
-           
-            <h3>👤 Dados Pessoais</h3>
-            <label>Nome Completo:</label>
-            <input type="text" name="Nome" required>
+            
+            <div class="form-section">
+                <h3>👤 Dados Pessoais</h3>
+                <label>📛 Nome Completo:</label>
+                <input type="text" name="Nome" required>
 
-            <label>Data de Nascimento:</label>
-            <input type="date" name="Nascimento" required>
+                <label>📅 Data de Nascimento:</label>
+                <input type="date" name="Nascimento" required 
+                    onfocus="this.type='date'" 
+                    onblur="this.type='text'"
+                    placeholder="dd/mm/aaaa">
 
-            <label>Telefone:</label>
-            <input type="tel" name="Telefone" placeholder="(DDD) 00000-0000" required>
+                <label>📱 Telefone:</label>
+                <input type="tel" name="Telefone" placeholder="(DDD) 00000-0000" required>
 
-            <label>Email:</label>
-            <input type="email" name="Email" required>
+                <label>📧 Email:</label>
+                <input type="email" name="Email" required>
 
-            <label>CPF:</label>
-            <input type="text" name="CPF" placeholder="000.000.000-00" required>
+                <label>🆔 CPF:</label>
+                <input type="text" name="CPF" placeholder="000.000.000-00" required>
 
-            <label>Gênero:</label>
-            <select name="Genero" required>
-                <option value="">Selecione</option>
-                <option value="Masculino">Masculino</option>
-                <option value="Feminino">Feminino</option>
-                <option value="Outro">Outro</option>
-            </select>
+                <label>🚻 Gênero:</label>
+                <select name="Genero" required>
+                    <option value="">Selecione</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Feminino">Feminino</option>
+                    <option value="Outro">Outro</option>
+                </select>
 
-            <label>Unidade da Clínica:</label>
-            <select name="Clinica" required>
-                <option value="">Selecione</option>
-                <option value="São Paulo">São Paulo</option>
-                <option value="Rio de Janeiro">Rio de Janeiro</option>
-            </select>
+                <label>🏥 Unidade da Clínica:</label>
+                <select name="Clinica" required>
+                    <option value="">Selecione</option>
+                    <option value="São Paulo">São Paulo</option>
+                    <option value="Rio de Janeiro">Rio de Janeiro</option>
+                </select>
 
-            <label>Plano de Saúde:</label>
-            <select name="PlanoDeSaude" required>
-                <option value="">Selecione</option>
-                <option value="Sim">Sim</option>
-                <option value="Não">Não</option>
-            </select>
+                <label>💼 Plano de Saúde:</label>
+                <select name="PlanoDeSaude" required>
+                    <option value="">Selecione</option>
+                    <option value="Sim">Sim</option>
+                    <option value="Não">Não</option>
+                </select>
 
-            <label>Estado:</label>
-            <select name="Estado" id="Estado" required>
-                <option value="">Selecione o Estado</option>
-            </select>
+                <label>📍 Estado:</label>
+                <select name="Estado" id="Estado" required>
+                    <option value="">Selecione o Estado</option>
+                </select>
 
-            <label>Cidade:</label>
-            <select name="Cidade" id="Cidade" required>
-                <option value="">Selecione a Cidade</option>
-            </select>
-
-            <h3>📅 Agendamento</h3>
-            <label>Data do Agendamento:</label>
-            <input type="date" name="DataAgendamento" required>
-
-            <label>Horário do Agendamento:</label>
-            <input type="time" name="HorarioAgendamento" required>
-
-            <h3>⚕️ Histórico Médico</h3>
-            <div class="toggle-group">
-                <input type="checkbox" name="HistoricoMedico" value="Diabetes" id="diabetes"><label for="diabetes">Diabetes</label>
-                <input type="checkbox" name="HistoricoMedico" value="Hipertensão" id="hipertensao"><label for="hipertensao">Hipertensão</label>
-                <input type="checkbox" name="HistoricoMedico" value="Alergias" id="alergias"><label for="alergias">Alergias</label>
-                <input type="checkbox" name="HistoricoMedico" value="Asma" id="asma"><label for="asma">Asma</label>
-                <input type="checkbox" name="HistoricoMedico" value="Doenças Cardíacas" id="cardiacas"><label for="cardiacas">Doenças Cardíacas</label>
-                <input type="checkbox" name="HistoricoMedico" value="Epilepsia" id="epilepsia"><label for="epilepsia">Epilepsia</label>
-                <input type="checkbox" name="HistoricoMedico" value="Nenhuma" id="nenhuma"><label for="nenhuma">Nenhuma Doença</label>
+                <label>🏙️ Cidade:</label>
+                <select name="Cidade" id="Cidade" required>
+                    <option value="">Selecione a Cidade</option>
+                </select>
             </div>
 
-            <h3>💆‍♂️ Procedimentos Desejados</h3>
-            <div class="toggle-group">
-                <input type="checkbox" name="Procedimentos" value="Botox" id="botox"><label for="botox">Botox</label>
-                <input type="checkbox" name="Procedimentos" value="Preenchimento" id="preenchimento"><label for="preenchimento">Preenchimento</label>
-                <input type="checkbox" name="Procedimentos" value="Laser" id="laser"><label for="laser">Laser</label>
-                <input type="checkbox" name="Procedimentos" value="Peeling" id="peeling"><label for="peeling">Peeling</label>
-                <input type="checkbox" name="Procedimentos" value="Skinbooster" id="skinbooster"><label for="skinbooster">Skinbooster</label>
-                <input type="checkbox" name="Procedimentos" value="Microagulhamento" id="microagulhamento"><label for="microagulhamento">Microagulhamento</label>
-                <input type="checkbox" name="Procedimentos" value="Lipo enzimática" id="lipo"><label for="lipo">Lipo Enzimática</label>
-                <input type="checkbox" name="Procedimentos" value="Fios de Sustentação" id="fios"><label for="fios">Fios de Sustentação</label>
-                <input type="checkbox" name="Procedimentos" value="Nenhuma" id="nenhuma2"><label for="nenhuma2">Nenhum Procedimento</label>
+            <div class="form-section">
+                <h3>📅 Agendamento</h3>
+                <label>🗓️ Data do Agendamento:</label>
+                <input type="date" name="DataAgendamento" required
+                    onfocus="this.type='date'" 
+                    onblur="this.type='text'"
+                    placeholder="dd/mm/aaaa">
+
+                <label>⏰ Horário do Agendamento:</label>
+                <input type="time" name="HorarioAgendamento" required>
             </div>
 
-            <h3>💊 Medicações em Uso</h3>
-            <select name="MedicacoesUso">
-                <option value="">Selecione</option>
-                <option value="Sim">Sim</option>
-                <option value="Não">Não</option>
-            </select>
-            <textarea name="Medicacoes" placeholder="Digite aqui alguma medicação caso tome"></textarea>
-
-            <h3>🧑🏼‍⚕️Histórico de Cirurgias</h3>
-            <select name="CirurgiasUso">
-                <option value="">Selecione</option>
-                <option value="Sim">Sim</option>
-                <option value="Não">Não</option>
-            </select>
-            <textarea name="Cirurgias" placeholder="Digite aqui alguma cirurgia caso tenha feito alguma"></textarea>
-
-            <h3>📞 Número do SUS (Opcional)</h3>
-            <label>Selecione se deseja adicionar o número do SUS:</label>
-            <select name="SUS" id="sus" required>
-                <option value="">Não adicionar número</option>
-                <option value="Adicionar">Adicionar número do SUS</option>
-            </select>
-            <input type="text" name="SUSNumero" id="SUSNumero" placeholder="Digite o número do SUS" style="display:none;">
-            <small>Este campo não é obrigatório.</small>
-
-            <h3>Escolha seu Plano</h3>
-            <label>Selecione um plano:</label>
-            <select name="Plano" required>
-                <option value="Nenhum plano por enquanto">Nenhum plano por enquanto</option>
-                <option value="Plano Básico">Plano Básico - R$ 99,90/mês</option>
-                <option value="Plano Intermediário">Plano Intermediário - R$ 199,90/mês</option>
-                <option value="Plano Avançado">Plano Avançado - R$ 299,90/mês</option>
-            </select>
-           
-            <div class="consentimento">
-                <label>
-                    <input type="checkbox" name="Consentimento" value="Aceito" required>
-                    Declaro que as informações fornecidas são verdadeiras e concordo com os <a href="#">termos e condições</a>.
-                </label>
+            <div class="form-section">
+                <h3>⚕️ Histórico Médico</h3>
+                <div class="toggle-group">
+                    <input type="checkbox" name="HistoricoMedico" value="Diabetes" id="diabetes"><label for="diabetes">💉 Diabetes</label>
+                    <input type="checkbox" name="HistoricoMedico" value="Hipertensão" id="hipertensao"><label for="hipertensao">🩺 Hipertensão</label>
+                    <input type="checkbox" name="HistoricoMedico" value="Alergias" id="alergias"><label for="alergias">🤧 Alergias</label>
+                    <input type="checkbox" name="HistoricoMedico" value="Asma" id="asma"><label for="asma">🌬️ Asma</label>
+                    <input type="checkbox" name="HistoricoMedico" value="Doenças Cardíacas" id="cardiacas"><label for="cardiacas">❤️ Doenças Cardíacas</label>
+                    <input type="checkbox" name="HistoricoMedico" value="Epilepsia" id="epilepsia"><label for="epilepsia">🧠 Epilepsia</label>
+                    <input type="checkbox" name="HistoricoMedico" value="Nenhuma" id="nenhuma"><label for="nenhuma">✅ Nenhuma Doença</label>
+                </div>
             </div>
 
-            <button type="submit">Enviar Formulário</button>
+            <div class="form-section">
+                <h3>💆‍♂️ Procedimentos Desejados</h3>
+                <div class="toggle-group">
+                    <input type="checkbox" name="Procedimentos" value="Botox" id="botox"><label for="botox">💉 Botox</label>
+                    <input type="checkbox" name="Procedimentos" value="Preenchimento" id="preenchimento"><label for="preenchimento">👄 Preenchimento</label>
+                    <input type="checkbox" name="Procedimentos" value="Laser" id="laser"><label for="laser">🔦 Laser</label>
+                    <input type="checkbox" name="Procedimentos" value="Peeling" id="peeling"><label for="peeling">🍋 Peeling</label>
+                    <input type="checkbox" name="Procedimentos" value="Skinbooster" id="skinbooster"><label for="skinbooster">💎 Skinbooster</label>
+                    <input type="checkbox" name="Procedimentos" value="Microagulhamento" id="microagulhamento"><label for="microagulhamento">🪡 Microagulhamento</label>
+                    <input type="checkbox" name="Procedimentos" value="Lipo enzimática" id="lipo"><label for="lipo">⚖️ Lipo Enzimática</label>
+                    <input type="checkbox" name="Procedimentos" value="Fios de Sustentação" id="fios"><label for="fios">🧵 Fios de Sustentação</label>
+                    <input type="checkbox" name="Procedimentos" value="Nenhuma" id="nenhuma2"><label for="nenhuma2">🚫 Nenhum Procedimento</label>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>💊 Medicações em Uso</h3>
+                <select name="MedicacoesUso">
+                    <option value="">Selecione</option>
+                    <option value="Sim">✅ Sim</option>
+                    <option value="Não">❌ Não</option>
+                </select>
+                <textarea name="Medicacoes" placeholder="💊 Digite aqui alguma medicação caso tome"></textarea>
+            </div>
+
+            <div class="form-section">
+                <h3>🧑🏼‍⚕️ Histórico de Cirurgias</h3>
+                <select name="CirurgiasUso">
+                    <option value="">Selecione</option>
+                    <option value="Sim">✅ Sim</option>
+                    <option value="Não">❌ Não</option>
+                </select>
+                <textarea name="Cirurgias" placeholder="🩺 Digite aqui alguma cirurgia caso tenha feito alguma"></textarea>
+            </div>
+
+            <div class="form-section">
+                <h3>📞 Número do SUS (Opcional)</h3>
+                <label>🏥 Selecione se deseja adicionar o número do SUS:</label>
+                <select name="SUS" id="sus" required>
+                    <option value="">❌ Não adicionar número</option>
+                    <option value="Adicionar">➕ Adicionar número do SUS</option>
+                </select>
+                <input type="text" name="SUSNumero" id="SUSNumero" placeholder="🔢 Digite o número do SUS" style="display:none;">
+                <small>Este campo não é obrigatório.</small>
+            </div>
+
+            <div class="form-section">
+                <h3>💰 Escolha seu Plano</h3>
+                <label>💎 Selecione um plano:</label>
+                <select name="Plano" required>
+                    <option value="Nenhum plano por enquanto">💸 Nenhum plano por enquanto</option>
+                    <option value="Plano Básico">🥉 Plano Básico - R$ 99,90/mês</option>
+                    <option value="Plano Intermediário">🥈 Plano Intermediário - R$ 199,90/mês</option>
+                    <option value="Plano Avançado">🥇 Plano Avançado - R$ 299,90/mês</option>
+                </select>
+            </div>
+
+            <div class="form-section">
+                <div class="consentimento">
+                    <label>
+                        <input type="checkbox" name="Consentimento" value="Aceito" required>
+                        📝 Declaro que as informações fornecidas são verdadeiras e concordo com os <a href="#">termos e condições</a>.
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit">📤 Enviar Formulário</button>
         </form>
         <footer>
-            <p>Este site foi desenvolvido por João Ricardo, engenheiro de computação, <a href="https://www.instagram.com/joaoricardo.pe" target="_blank">Instagram</a> | <a href="https://wa.me/55<seu número>" target="_blank">WhatsApp</a></p>
+            <p>🌟 Este site foi desenvolvido por João Ricardo, engenheiro de computação, 
+                <a href="https://www.instagram.com/joaoricardo.pe" target="_blank">📸 Instagram</a> | 
+                <a href="https://wa.me/55<seu número>" target="_blank">💬 WhatsApp</a></p>
         </footer>
     </div>
 
