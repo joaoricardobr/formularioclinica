@@ -344,6 +344,10 @@
                     <input type="checkbox" name="HistoricoMedico" value="Epilepsia" id="epilepsia"><label for="epilepsia">🧠 Epilepsia</label>
                     <input type="checkbox" name="HistoricoMedico" value="Nenhuma" id="nenhuma"><label for="nenhuma">✅ Nenhuma Doença</label>
                 </div>
+            </select>
+            <br/>
+            <textarea name="historicoMedico" placeholder="🩺 Digite aqui alguma doença pré existente"></textarea>
+        </div>
             </div>
 
             <div class="form-section">
@@ -359,7 +363,10 @@
                     <input type="checkbox" name="Procedimentos" value="Fios de Sustentação" id="fios"><label for="fios">🧵 Fios de Sustentação</label>
                     <input type="checkbox" name="Procedimentos" value="Nenhuma" id="nenhuma2"><label for="nenhuma2">🚫 Nenhum Procedimento</label>
                 </div>
-            </div>
+            </select>
+            <br/>
+            <textarea name="procedimento" placeholder="🩺 Digite aqui alguma procedimento desejavel"></textarea>
+        </div>
 
             <div class="form-section">
                 <h3>💊 Medicações em Uso</h3>
@@ -406,8 +413,20 @@
             <div class="form-section">
                 <div class="consentimento">
                     <label>
-                        <input type="checkbox" name="Consentimento" value="Aceito" required>
-                        📝 Declaro que as informações fornecidas são verdadeiras e concordo com os <a href="#">termos e condições</a>.
+                        <h2>Termo de Consentimento</h2>
+    <p class="term-text">
+      Ao continuar, você concorda com os <a href="#">termos e condições de uso</a> do nosso site. O uso de nossos serviços está sujeito às
+      <a href="#">políticas de privacidade</a> e aos termos descritos a seguir. Leia atentamente antes de prosseguir.
+    </p>
+    
+    <div class="form-section">
+        
+        <select name="CONSENTIMENTO">
+            <option value="">Selecione</option>
+            <option value="Sim">✅ Sim</option>
+            <option value="Não">❌ Não</option>
+        </select>
+
                     </label>
                 </div>
             </div>
